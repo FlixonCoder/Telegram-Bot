@@ -12,7 +12,6 @@ from Operations.LeadManager.lead_manager import lead_manager
 load_dotenv()
 BOT_USERNAME = os.getenv('BOT_NAME')
 TOKEN = os.getenv('TOKEN')
-print(f"Bot username: {BOT_USERNAME}, Token: {TOKEN}")
 
 # --- Commands ---
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
