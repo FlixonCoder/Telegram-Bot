@@ -5,13 +5,14 @@ services:
     plan: free
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python chatbot.py"
+    autoDeploy: true
     envVars:
       - key: TOKEN
         sync: false
       - key: BOT_NAME
         sync: false
       - key: GEMINI_API_KEY
-        sunc: false
+        sync: false
       - key: DB_NAME
         sync: false
       - key: DB_COLLECTION
