@@ -10,3 +10,11 @@ services:
         sync: false
       - key: BOT_NAME
         sync: false
+      - key: GEMINI_API_KEY
+        sunc: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_COLLECTION
+        sync: false
+      - key: DB_CLUSTER
+        sync: false
