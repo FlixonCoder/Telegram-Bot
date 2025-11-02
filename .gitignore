@@ -1,0 +1,28 @@
+# --- Secrets and Environment ---
+# !! CRITICAL: Never commit your API keys or secrets
+.env
+
+# --- Python Virtual Environment ---
+# Ignore the entire virtual environment folder
+.venv/
+
+
+# --- Python Cache & Bytecode ---
+# Ignore the Python cache directory
+__pycache__/
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# --- IDE / Editor Settings ---
+# Ignore VS Code settings
+.vscode/
+# Ignore PyCharm/IntelliJ settings
+.idea/
+
+# --- Operating System Files ---
+# Ignore macOS system files
+.DS_Store
+# Ignore Windows thumbnail cache
+Thumbs.db
