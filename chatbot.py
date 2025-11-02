@@ -54,24 +54,24 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f"⚠️ Update {update} caused error: {context.error}")
 
 # --- Simple keep-alive web server for Render Free Plan ---
-class SimpleHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(f"🤖 Telegram bot is running!")
+# class SimpleHandler(BaseHTTPRequestHandler):
+#     def do_GET(self):
+#         self.send_response(200)
+#         self.end_headers()
+#         self.wfile.write(f"🤖 Telegram bot is running!")
 
-def keep_alive():
-    port = int(os.environ.get("PORT", 8080))
-    server = HTTPServer(("0.0.0.0", port), SimpleHandler)
-    thread = threading.Thread(target=server.serve_forever)
-    thread.daemon = True
-    thread.start()
-    print(f"🌐 Keep-alive server running on port {port}")
+# def keep_alive():
+#     port = int(os.environ.get("PORT", 8080))
+#     server = HTTPServer(("0.0.0.0", port), SimpleHandler)
+#     thread = threading.Thread(target=server.serve_forever)
+#     thread.daemon = True
+#     thread.start()
+#     print(f"🌐 Keep-alive server running on port {port}")
 
 # --- Entry point ---
 if __name__ == "__main__":
     # Start the dummy web server first (for Render)
-    keep_alive()
+    # keep_alive()
 
     app = Application.builder().token(TOKEN).build()
 
