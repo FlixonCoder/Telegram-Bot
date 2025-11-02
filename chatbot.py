@@ -1,7 +1,8 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from dotenv import load_dotenv
-import os, sys
+import os, sys, threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # --- Path setup to access external modules ---
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -12,6 +13,7 @@ load_dotenv()
 BOT_USERNAME = os.getenv('BOT_NAME')
 TOKEN = os.getenv('TOKEN')
 print(f"Bot username: {BOT_USERNAME}, Token: {TOKEN}")
+
 # --- Commands ---
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("👋 Hello! I am your chatbot. How can I assist you today?")
@@ -52,8 +54,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f"⚠️ Update {update} caused error: {context.error}")
 
+# --- Simple keep-alive web server for Render Free Plan ---
+class SimpleHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(f"🤖 Telegram bot is running!")
+
+def keep_alive():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), SimpleHandler)
+    thread = threading.Thread(target=server.serve_forever)
+    thread.daemon = True
+    thread.start()
+    print(f"🌐 Keep-alive server running on port {port}")
+
 # --- Entry point ---
 if __name__ == "__main__":
+    # Start the dummy web server first (for Render)
+    keep_alive()
+
     app = Application.builder().token(TOKEN).build()
 
     # Command Handlers
