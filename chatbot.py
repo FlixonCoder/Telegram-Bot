@@ -12,6 +12,7 @@ from Operations.LeadManager.lead_manager import lead_manager
 load_dotenv()
 BOT_USERNAME = os.getenv('BOT_NAME')
 TOKEN = os.getenv('TOKEN')
+print(f"Bot username: {BOT_USERNAME}, Token: {TOKEN}")
 
 # --- Commands ---
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -58,7 +59,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(f"🤖 Telegram bot is running!")
+        self.wfile.write("🤖 Telegram bot is running!")
 
 def keep_alive():
     port = int(os.environ.get("PORT", 8080))
