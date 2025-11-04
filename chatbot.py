@@ -59,7 +59,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b"🤖 Telegram bot is running!")
+        self.wfile.write(b"Telegram bot is running!")
 
 def keep_alive():
     port = int(os.environ.get("PORT", 8080))
