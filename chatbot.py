@@ -72,7 +72,7 @@ def keep_alive():
 # --- Entry point ---
 if __name__ == "__main__":
     # Start the dummy web server first (for Render)
-    # keep_alive()
+    keep_alive()
 
     app = Application.builder().token(TOKEN).build()
 
