@@ -3,6 +3,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 from dotenv import load_dotenv
 import os, sys, threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import time
 
 # --- Path setup to access external modules ---
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -69,9 +70,29 @@ def keep_alive():
     thread.start()
     print(f"🌐 Keep-alive server running on port {port}")
 
-# --- Entry point ---
+# # --- Entry point ---
+# if __name__ == "__main__":
+#     # Start the dummy web server first (for Render)
+#     keep_alive()
+
+#     app = Application.builder().token(TOKEN).build()
+
+#     # Command Handlers
+#     app.add_handler(CommandHandler("start", start_command))
+#     app.add_handler(CommandHandler("help", help_command))
+#     app.add_handler(CommandHandler("process", process_command))
+    
+#     # Text Messages
+#     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+#     # Error Handler
+#     app.add_error_handler(error_handler)
+
+#     print("🤖 Bot is running...")
+#     app.run_polling(poll_interval=3)
+
 if __name__ == "__main__":
-    # Start the dummy web server first (for Render)
+    # Start the dummy web server (Render health check)
     keep_alive()
 
     app = Application.builder().token(TOKEN).build()
@@ -87,5 +108,14 @@ if __name__ == "__main__":
     # Error Handler
     app.add_error_handler(error_handler)
 
-    print("🤖 Bot is running...")
-    app.run_polling(poll_interval=3)
+    print("🤖 Bot is starting...")
+
+    # --- Restart polling automatically if it stops ---
+    while True:
+        try:
+            print("🚀 Starting polling loop...")
+            app.run_polling(poll_interval=3, timeout=30)
+        except Exception as e:
+            print(f"⚠️ Polling crashed: {e}")
+            print("🔁 Restarting polling in 5 seconds...")
+            time.sleep(5)
